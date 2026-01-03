@@ -222,6 +222,8 @@ function initFormValidation() {
     if (!form) return;
     
     form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
         let isValid = true;
         const errors = [];
         
@@ -255,9 +257,6 @@ function initFormValidation() {
         
         // If validation fails, prevent form submission and show errors
         if (!isValid) {
-            e.preventDefault();
-            
-            // Show first error (in a real app you might want to show all errors)
             if (errors.length > 0) {
                 alert(errors[0]);
             }
@@ -267,7 +266,13 @@ function initFormValidation() {
             if (firstError) {
                 firstError.focus();
             }
+            
+            return;
         }
+        
+        // Demo submission flow
+        alert('Заявка отправлена (демо). Настройте обработку формы на сервере позже.');
+        form.reset();
     });
     
     // Real-time validation feedback
