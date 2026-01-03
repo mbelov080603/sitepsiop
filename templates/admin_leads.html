@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Админ панель - Заявки на ранний доступ{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 1200px; padding: 20px;">
+    <h1 style="margin-bottom: 30px; color: #333;">Заявки на ранний доступ PSIOP</h1>
+    
+    {% if leads %}
+        <div style="background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead style="background: #f8f9fa;">
+                    <tr>
+                        <th style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6; font-weight: 600;">ID</th>
+                        <th style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6; font-weight: 600;">Имя</th>
+                        <th style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6; font-weight: 600;">Email</th>
+                        <th style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6; font-weight: 600;">Роль</th>
+                        <th style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6; font-weight: 600;">Планы использования</th>
+                        <th style="padding: 15px; text-align: left; border-bottom: 1px solid #dee2e6; font-weight: 600;">Дата</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for lead in leads %}
+                    <tr style="border-bottom: 1px solid #f1f3f4;">
+                        <td style="padding: 15px; color: #666;">{{ lead.id }}</td>
+                        <td style="padding: 15px; font-weight: 500;">{{ lead.name }}</td>
+                        <td style="padding: 15px;">
+                            <a href="mailto:{{ lead.email }}" style="color: #007bff; text-decoration: none;">{{ lead.email }}</a>
+                        </td>
+                        <td style="padding: 15px; color: #666;">{{ lead.role or 'Не указано' }}</td>
+                        <td style="padding: 15px; max-width: 300px; word-wrap: break-word; color: #666;">{{ lead.usage or 'Не указано' }}</td>
+                        <td style="padding: 15px; color: #666; font-size: 14px;">{{ lead.created_at }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <div style="margin-top: 20px; padding: 15px; background: #e8f4fd; border-radius: 6px; color: #0c5460;">
+            <strong>Всего заявок: {{ leads|length }}</strong>
+        </div>
+        
+    {% else %}
+        <div style="text-align: center; padding: 60px 20px; background: #f8f9fa; border-radius: 8px;">
+            <h3 style="color: #666; margin-bottom: 10px;">Пока нет заявок</h3>
+            <p style="color: #888;">Заявки будут появляться здесь, когда пользователи заполнят форму на главной странице.</p>
+        </div>
+    {% endif %}
+    
+    <div style="margin-top: 30px; text-align: center;">
+        <a href="{{ url_for('index') }}" style="display: inline-block; padding: 12px 24px; background: #007bff; color: white; text-decoration: none; border-radius: 6px; font-weight: 500;">
+            Вернуться на главную
+        </a>
+    </div>
+</div>
+{% endblock %}
